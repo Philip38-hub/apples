@@ -1,0 +1,1 @@
+web gunicorn apples.wsgi:application --log-file -
