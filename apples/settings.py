@@ -12,9 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import django_heroku
-import dj_database_url
-
+#import django_heroku
+#import dj_database_url
+import secrets
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=^5gnkb)mduplzu2a%zq(r(x@@&0@4fa=+m69^#%lyz=i7g6xd'
+SECRET_KEY = secrets.token_urlsafe(64)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'apples.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
+        }
 }
 
 
@@ -125,4 +129,4 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
